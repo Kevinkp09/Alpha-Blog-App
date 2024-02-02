@@ -1,15 +1,7 @@
-html,
+/* html,
 body {
   height: 100%;
-}
-
-#page-content {
-  flex: 1 0 auto;
-}
-
-.nav-link {
-  color: white !important;
-}
+} */
 
 #logo {
   float: left;
