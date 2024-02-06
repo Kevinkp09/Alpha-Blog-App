@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid bg-black">
+    <%= link_to "AlphaBlog", root_path, class: "navbar-brand", id: "logo" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%=  link_to "Bloggers", users_path, class: "nav-link text-white" %> 
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Article
+          </a>
+          <ul class="dropdown-menu"> 
+            <% if logged_in? %>
+            <%= link_to "New Article", new_article_path, class: "dropdown-item"%>
+            <% end %>
+            <%= link_to "View Articles", articles_path, class: "dropdown-item"%>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu"> 
+            <% if logged_in? && current_user.admin? %>
+            <%= link_to "Create new category", new_category_path, class: "dropdown-item"%>
+            <% end %>
+            <%= link_to "View Categories", categories_path, class: "dropdown-item"%>
+          </ul>
+        </li>
+        <% if logged_in? %>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               <%= "(Admin)" if current_user.admin? %> Profile: <%= current_user.username %>
+              </a>
+              <ul class="dropdown-menu"> 
+                <%= link_to "View profile", user_path(current_user), class: "dropdown-item"%>
+                <%= link_to "Edit profile", edit_user_path(current_user), class: "dropdown-item"%>
+                <%= link_to "Delete profile", user_path(current_user), class: "dropdown-item text-danger", data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                }%>
+
+              </ul>
+           </li>
+          <li class="nav-item">
+            <%= link_to "Logout", logout_path, class: "nav-link text-white", data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Do you really wanna logout?"
+                    } %>
+          </li>
+        
+        <% else %>
+              <li class="nav-item">
+              <%= link_to "Login", login_path, class: "nav-link text-white"%>
+              </li>
+              <li class="nav-item">
+              <%= link_to "Sign Up", signup_path, class: "nav-link text-white"%>
+              </li>
+        <% end %>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
